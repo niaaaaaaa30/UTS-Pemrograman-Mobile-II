@@ -1,0 +1,102 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'dart:async';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Aplikasi Flutter',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: SplashScreen(),
+    );
+  }
+}
+
+class SplashScreen extends StatefulWidget {
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Setelah tiga detik, pindah ke halaman Login
+    Timer(
+      Duration(seconds: 3),
+      () => Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
+    return Scaffold(
+      body: Center(
+        child: FlutterLogo(size: 150),
+      ),
+    );
+  }
+}
+
+class LoginPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Halaman Login'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: LoginForm(),
+      ),
+    );
+  }
+}
+
+class LoginForm extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        TextField(
+          decoration: InputDecoration(labelText: 'Username'),
+        ),
+        SizedBox(height: 20),
+        TextField(
+          obscureText: true,
+          decoration: InputDecoration(labelText: 'Password'),
+        ),
+        SizedBox(height: 20),
+        ElevatedButton(
+          onPressed: () {
+            // Implementasi logika autentikasi di sini
+          },
+          child: Text('Login'),
+        ),
+      ],
+    );
+  }
+}
+
+// Tambahkan tombol "Daftar" di LoginForm
+TextButton(
+  onPressed: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => RegisterPage()),
+    );
+  },
+  child: Text('Belum punya akun? Daftar di sini'),
+)
